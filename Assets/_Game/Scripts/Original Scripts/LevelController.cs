@@ -80,6 +80,7 @@ public class LevelController : MonoBehaviour {
 
         if (levels[_currentLevel].doesSpawnBoss)
         {
+            levels[_currentLevel].doesSpawnBoss = false;
             Instantiate(bossPrefab, bossSpawnPosition.position, Quaternion.identity);
             return;
         }

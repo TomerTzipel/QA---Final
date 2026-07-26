@@ -75,7 +75,6 @@ jobs:
           testMode: PlayMode
           # The path where test results will be generated
           artifactsPath: artifacts/TestResults/Playmode
-	  customParameters: -nographics
 
       - name: Upload Playmode Test Results
         uses: actions/upload-artifact@v4

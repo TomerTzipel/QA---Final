@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Space Shooter Template FREE/Scenes/Demo_Scene.unity
     guid: d31945966fedec24fa8cf028f485e539
+  - enabled: 1
+    path: Assets/_Game/Tests/Projectile Test Scene.unity
+    guid: 30aab20f9b020d3428389938eed0b0bf
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

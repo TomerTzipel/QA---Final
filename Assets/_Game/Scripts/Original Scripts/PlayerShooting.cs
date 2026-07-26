@@ -28,21 +28,31 @@ public class PlayerShooting : MonoBehaviour {
     public int weaponPower = 1; 
 
     public Guns guns;
-    bool shootingIsActive = true; 
+    public bool shootingIsActive = true; 
     [HideInInspector] public int maxweaponPower = 4; 
     public static PlayerShooting instance;
 
     private void Awake()
     {
         if (instance == null)
+        {
+            Debug.Log("Player Awake");
             instance = this;
+        }
+            
     }
     private void Start()
     {
+        if(guns == null) { return; }
+
+        if(guns.leftGun)
+            guns.leftGunVFX = guns.leftGun.GetComponent<ParticleSystem>();
         //receiving shooting visual effects components
-        guns.leftGunVFX = guns.leftGun.GetComponent<ParticleSystem>();
-        guns.rightGunVFX = guns.rightGun.GetComponent<ParticleSystem>();
-        guns.centralGunVFX = guns.centralGun.GetComponent<ParticleSystem>();
+        if (guns.rightGun)
+            guns.rightGunVFX = guns.rightGun.GetComponent<ParticleSystem>();
+
+        if (guns.centralGun)
+            guns.centralGunVFX = guns.centralGun.GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -60,33 +70,60 @@ public class PlayerShooting : MonoBehaviour {
     //method for a shot
     void MakeAShot() 
     {
+        if (guns == null) return;
+
         switch (weaponPower) // according to weapon power 'pooling' the defined anount of projectiles, on the defined position, in the defined rotation
         {
             case 1:
-                CreateLazerShot(projectileObject, guns.centralGun.transform.position, Vector3.zero);
-                guns.centralGunVFX.Play();
+                if(projectileObject)
+                    CreateLazerShot(projectileObject, guns.centralGun.transform.position, Vector3.zero);
+                if (guns.centralGunVFX)
+                    guns.centralGunVFX.Play();
                 break;
+
             case 2:
-                CreateLazerShot(projectileObject, guns.rightGun.transform.position, Vector3.zero);
-                guns.leftGunVFX.Play();
-                CreateLazerShot(projectileObject, guns.leftGun.transform.position, Vector3.zero);
-                guns.rightGunVFX.Play();
+                if (projectileObject)
+                {
+                    CreateLazerShot(projectileObject, guns.rightGun.transform.position, Vector3.zero);
+                    CreateLazerShot(projectileObject, guns.leftGun.transform.position, Vector3.zero);
+                }
+                if (guns.leftGunVFX)
+                    guns.leftGunVFX.Play();
+                if (guns.rightGunVFX)
+                    guns.rightGunVFX.Play();
                 break;
+
             case 3:
-                CreateLazerShot(projectileObject, guns.centralGun.transform.position, Vector3.zero);
-                CreateLazerShot(projectileObject, guns.rightGun.transform.position, new Vector3(0, 0, -5));
-                guns.leftGunVFX.Play();
-                CreateLazerShot(projectileObject, guns.leftGun.transform.position, new Vector3(0, 0, 5));
-                guns.rightGunVFX.Play();
+                if (projectileObject)
+                {
+                    CreateLazerShot(projectileObject, guns.centralGun.transform.position, Vector3.zero);
+                    CreateLazerShot(projectileObject, guns.rightGun.transform.position, new Vector3(0, 0, -5));
+                    CreateLazerShot(projectileObject, guns.leftGun.transform.position, new Vector3(0, 0, 5));
+                }
+
+                if (guns.leftGunVFX)
+                    guns.leftGunVFX.Play();
+
+                if (guns.rightGunVFX)
+                    guns.rightGunVFX.Play();
                 break;
+
             case 4:
-                CreateLazerShot(projectileObject, guns.centralGun.transform.position, Vector3.zero);
-                CreateLazerShot(projectileObject, guns.rightGun.transform.position, new Vector3(0, 0, -5));
-                guns.leftGunVFX.Play();
-                CreateLazerShot(projectileObject, guns.leftGun.transform.position, new Vector3(0, 0, 5));
-                guns.rightGunVFX.Play();
-                CreateLazerShot(projectileObject, guns.leftGun.transform.position, new Vector3(0, 0, 15));
-                CreateLazerShot(projectileObject, guns.rightGun.transform.position, new Vector3(0, 0, -15));
+                if (projectileObject)
+                {
+                    CreateLazerShot(projectileObject, guns.centralGun.transform.position, Vector3.zero);
+                    CreateLazerShot(projectileObject, guns.rightGun.transform.position, new Vector3(0, 0, -5));
+                    CreateLazerShot(projectileObject, guns.leftGun.transform.position, new Vector3(0, 0, 5));
+                    CreateLazerShot(projectileObject, guns.leftGun.transform.position, new Vector3(0, 0, 15));
+                    CreateLazerShot(projectileObject, guns.rightGun.transform.position, new Vector3(0, 0, -15));
+                }
+
+                if (guns.leftGunVFX)
+                    guns.leftGunVFX.Play();
+
+                if (guns.rightGunVFX)
+                    guns.rightGunVFX.Play();
+
                 break;
         }
     }
